@@ -1,0 +1,10 @@
+{
+	"name": "VHDL Development Environment",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+	"extensions": [
+		"ms-python.python",
+		"VisualStudioExptTeam.vscodeintellicode"
+	]
+}
