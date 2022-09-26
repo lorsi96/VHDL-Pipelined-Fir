@@ -3,6 +3,7 @@ import fxpmath
 from typing import cast, Protocol
 from cocotb.triggers import FallingEdge, Timer
 from cocotb.binary import BinaryValue
+from cocotb.handle import NonHierarchyIndexableObject
 # *************************************************************************** #
 #                                  DUT Model                                  #
 # *************************************************************************** #
@@ -21,7 +22,7 @@ class DUT(Protocol):
         ... 
 
     @property
-    def coefs_i(self) -> BinaryValue:
+    def coefs_i(self) -> NonHierarchyIndexableObject:
         ...
 
     @property
@@ -75,8 +76,7 @@ TEST_DURATION_NS = 20
 async def my_second_test(dut:DUT):
     dut.clk_i.value = 0
     dut.data_i.value = float_to_s1616(2.0)
-    dut.coefs_i.value = float_to_s1616(1.0)
-
+    dut.coefs_i.value = [float_to_s1616(0.0) for _ in range(60)] 
     await cocotb.start(generate_clock(dut))
     await Timer(TEST_DURATION_NS, units="ns")
     await FallingEdge(dut.clk_i)

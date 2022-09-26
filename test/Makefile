@@ -5,7 +5,7 @@ SIM ?= ghdl
 TOPLEVEL_LANG ?= vhdl
 
 # Sources
-VHDL_SOURCES += $(PWD)/../hdl/example.vhd
+VHDL_SOURCES += $(PWD)/../hdl/parallel_fir_filter.vhd
 
 # TOPLEVEL is the name of the toplevel module in your Verilog or VHDL file
 TOPLEVEL = parallel_fir_filter
