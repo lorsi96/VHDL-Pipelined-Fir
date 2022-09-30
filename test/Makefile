@@ -1,7 +1,7 @@
 ## Makefile
 
 # Defaults
-SIM ?= ghdl
+SIM ?= modelsim
 TOPLEVEL_LANG ?= vhdl
 
 # Sources

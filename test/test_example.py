@@ -69,17 +69,19 @@ async def generate_clock(dut:DUT):
 # *************************************************************************** #
 #                                    Tests                                    #
 # *************************************************************************** #
-TEST_DURATION_NS = 20
+TEST_DURATION_NS = 1000
 
 
 @cocotb.test()
-async def my_second_test(dut:DUT):
+async def single_coef_test(dut:DUT):
     dut.clk_i.value = 0
+    dut.reset_i = 0
     dut.data_i.value = float_to_s1616(2.0)
-    dut.coefs_i.value = [float_to_s1616(0.0) for _ in range(60)] 
+    dut.coefs_i.value = [float_to_s1616(2.0)] + [float_to_s1616(0.0) for _ in range(59)] 
     await cocotb.start(generate_clock(dut))
     await Timer(TEST_DURATION_NS, units="ns")
     await FallingEdge(dut.clk_i)
-
     res = s1616_to_float(dut.data_o.value)
-    assert res == 2.0, f"Incorrect result {res}"
+    print(dut.data_i.value)
+    print(dut.data_o.value)
+    assert res == 4.0, f"Incorrect result {res}"

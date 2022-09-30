@@ -2,11 +2,11 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-package pds_fir is 
-type COEFFICIENTS is array(0 to 59) of std_logic_vector(31 downto 0);
+package pds_fir_package is
+    type fir_coefficients is array(59 downto 0) of signed(31 downto 0);
 end package;
 
-use work.pds_fir.all;
+use work.pds_fir_package.all;
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
@@ -20,7 +20,7 @@ entity parallel_fir_filter is
            clk_i    : in STD_LOGIC;
            reset_i  : in STD_LOGIC;
            enable_i : in STD_LOGIC;
-           coefs_i  : in COEFFICIENTS;
+           coefs_i  : in fir_coefficients;
            data_i   : in STD_LOGIC_VECTOR(DATA_WIDTH-1 downto 0);
            data_o   : out STD_LOGIC_VECTOR(DATA_WIDTH-1 downto 0) := (others => '0')
     );
@@ -43,7 +43,7 @@ signal dout_s : std_logic_vector(MAC_WIDTH-1 downto 0);
 signal sign_s : signed(MAC_WIDTH - (2 * DATA_WIDTH) + 1 downto 0) := (others=>'0');
  
 begin 
-data_o <= std_logic_vector(preg_s(0)(MAC_WIDTH-2 downto MAC_WIDTH-DATA_WIDTH-1));         
+data_o <= std_logic_vector(preg_s(0)(MAC_WIDTH-(DATA_WIDTH/2)-1 downto (DATA_WIDTH/2)));         
        
  
 process(clk_i)
@@ -63,11 +63,11 @@ if rising_edge(clk_i) then
             areg_s(i) <= signed(data_i); 
        
             if (i < FILTER_TAPS-1) then
-                mreg_s(i) <= areg_s(i) * signed(coefs_i(i));         
+                mreg_s(i) <= areg_s(i) * coefs_i(i);         
                 preg_s(i) <= mreg_s(i) + preg_s(i+1);
                          
             elsif (i = FILTER_TAPS-1) then
-                mreg_s(i) <= areg_s(i) * signed(coefs_i(i)); 
+                mreg_s(i) <= areg_s(i) * coefs_i(i); 
                 preg_s(i)<= mreg_s(i);
             end if;
         end loop; 
