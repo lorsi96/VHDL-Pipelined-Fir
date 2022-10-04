@@ -35,6 +35,7 @@ begin
     
     fir_saturator_inst : entity work.fir_saturator 
     port map (    
+        clk_i => clk_i,
         data_i => data,
         data_o => data_o
     );

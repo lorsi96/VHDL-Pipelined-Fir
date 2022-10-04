@@ -5,3 +5,6 @@ VHDL Pipelined Fir implementation with the following features:
 - Saturation and Rounding **Only** at output stage.
 - Supports up to 60 coefficients.
 - Testbenchs in Python using CocoTb
+
+## General architecture
+![architecture](./doc/arch.jpeg)
