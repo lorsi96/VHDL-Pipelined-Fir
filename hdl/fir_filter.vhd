@@ -11,7 +11,7 @@ entity fir_filter is
         COEFF_WIDTH : integer := FIR_COEFFICIENT_WIDTH;
         FILTER_TAPS : integer := FIR_MAX_TAPS_N;
         DATA_WIDTH  : integer := FIR_DATA_WIDTH;
-        COEFFS_FILE  : string := "../data/voice_filter.data"
+        COEFFS_FILE  : string := "../data/data_file_init.data"
     );
     port ( 
         clk_i, reset_i :  in std_logic;
