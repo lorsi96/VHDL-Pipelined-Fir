@@ -12,7 +12,7 @@ from utils import (
 )
 from duts import Clockable, Filter
 
-TEST_DURATION_NS = 1000
+TEST_DURATION_NS = 100
 
 # *************************************************************************** #
 #                             Testbench Utilities                             #
@@ -44,6 +44,8 @@ async def capture_output(dut: Filter, arr: List[float]):
 # *************************************************************************** #
 @cocotb.test()
 async def single_coef_test(dut: Filter):
+    for i in dut.fir_coef_loader.coeff_data:
+        print(i)
     dut.clk_i.value = 0
     dut.reset_i.value = 0
     dut.data_i.value = float_to_fixed(2.0, dtype="S16.16")
