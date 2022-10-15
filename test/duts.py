@@ -1,4 +1,4 @@
-from typing import Protocol
+from typing import Protocol, Iterable, Sequence
 from cocotb.binary import BinaryValue
 from cocotb.handle import NonHierarchyIndexableObject
 
@@ -41,7 +41,7 @@ class Filter(Protocol):
         ...
 
     @property
-    def coeffs_i(self) -> NonHierarchyIndexableObject:
+    def coeffs_i(self) -> Sequence[BinaryValue]:
         ...
 
     @property
