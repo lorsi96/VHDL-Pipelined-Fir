@@ -1,11 +1,16 @@
-from typing import Protocol, Iterable, Sequence
+from typing import Protocol, Sequence
 from cocotb.binary import BinaryValue
-from cocotb.handle import NonHierarchyIndexableObject
 
 
 class Clockable(Protocol):
     @property
     def clk_i(self) -> BinaryValue:
+        ...
+
+
+class Resetable(Protocol):
+    @property
+    def reset_i(self) -> BinaryValue:
         ...
 
 

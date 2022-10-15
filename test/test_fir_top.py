@@ -1,14 +1,11 @@
-from typing import Callable, Iterable, List
+from typing import Iterable, List
 import cocotb
 import numpy as np
-import pyfda
 from cocotb.triggers import RisingEdge, FallingEdge, Timer
 from utils import (
     load_float_coeffs_from_data,
     fxp_binary_value_to_float,
     float_to_fixed,
-    S1616_MIN,
-    S1616_MAX,
 )
 from duts import Clockable, Filter
 
@@ -43,42 +40,7 @@ async def capture_output(dut: Filter, arr: List[float]):
 #                                    Tests                                    #
 # *************************************************************************** #
 @cocotb.test()
-async def single_coef_test(dut: Filter):
-    for i in dut.fir_coef_loader.coeff_data:
-        print(i)
-    dut.clk_i.value = 0
-    dut.reset_i.value = 0
-    dut.data_i.value = float_to_fixed(2.0, dtype="S16.16")
-    await cocotb.start(generate_clock(dut))
-    await Timer(TEST_DURATION_NS, units="ns")
-    res = fxp_binary_value_to_float(dut.data_o, dtype="S16.16")
-    assert res == 4.0, f"Incorrect result {res}"
-
-
-@cocotb.test()
-async def positive_saturation_test(dut: Filter):
-    dut.clk_i.value = 0
-    dut.reset_i.value = 0
-    dut.data_i.value = float_to_fixed(S1616_MAX, dtype="S16.16")
-    await cocotb.start(generate_clock(dut))
-    await Timer(TEST_DURATION_NS, units="ns")
-    res = fxp_binary_value_to_float(dut.data_o, dtype="S16.16")
-    assert res == S1616_MAX, f"Incorrect result {res}"
-
-
-@cocotb.test()
-async def negative_saturation_test(dut: Filter):
-    dut.clk_i.value = 0
-    dut.reset_i.value = 0
-    dut.data_i.value = float_to_fixed(S1616_MIN, dtype="S16.16")
-    await cocotb.start(generate_clock(dut))
-    await Timer(TEST_DURATION_NS, units="ns")
-    res = fxp_binary_value_to_float(dut.data_o, dtype="S16.16")
-    assert res == S1616_MIN, f"Incorrect result {res}"
-
-
-@cocotb.test()
-async def arbitrary_filter_test(dut: Filter):
+async def real_filter_test(dut: Filter):
     # Prepare test signal.
     f_hz = 10
     fs_hz = 200
@@ -109,8 +71,8 @@ async def arbitrary_filter_test(dut: Filter):
 
     # Assertions.
     output_ndarray = np.array(output)
-    np.save("data", output_ndarray, allow_pickle=True)
-    np.save("datac", compare, allow_pickle=True)
+    # np.save("data", output_ndarray, allow_pickle=True)
+    # np.save("datac", compare, allow_pickle=True)
     tolerance = 2**-15
     for expected, actual in zip(compare, output_ndarray):
         assert np.abs(expected - actual) < tolerance, f"{expected} VS {actual}"

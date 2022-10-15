@@ -1,9 +1,8 @@
-from typing import Callable, Iterable, List
+from typing import Iterable, List
 import cocotb
 import numpy as np
 from cocotb.triggers import RisingEdge, FallingEdge, Timer
 from utils import (
-    load_float_coeffs_from_data,
     fxp_binary_value_to_float,
     float_to_fixed,
     S1616_MIN,
@@ -22,21 +21,6 @@ async def generate_clock(dut: Clockable):
         await Timer(1, units="ns")
         dut.clk_i.value = 1
         await Timer(1, units="ns")
-
-
-async def feed_samples(dut: Filter, samples: Iterable[float]):
-    for sample in samples:
-        dut.data_i.value = float_to_fixed(sample)
-        await FallingEdge(dut.clk_i)
-    dut.data_i.value = 0
-
-
-async def capture_output(dut: Filter, arr: List[float]):
-    await RisingEdge(dut.clk_i)  # Don't capture unil fist compute completes.
-    while True:
-        await FallingEdge(dut.clk_i)
-        arr.append(fxp_binary_value_to_float(dut.data_o))
-
 
 # *************************************************************************** #
 #                                    Tests                                    #

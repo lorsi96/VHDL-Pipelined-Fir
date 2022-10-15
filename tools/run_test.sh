@@ -1,0 +1,1 @@
+cd test && make FIR_TARGET=$1 && make clean; cd .. 
