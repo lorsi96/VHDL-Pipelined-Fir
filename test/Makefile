@@ -16,7 +16,8 @@ TOPLEVEL = fir_$(FIR_TARGET)
 
 MODULE = test_fir_$(FIR_TARGET)
 
-SIM_ARGS="-gCOEFFS_FILE=$(COEFFS_FILE)"
-TESTCASE=arbitrary_filter_test
+# ifeq $COEFFS_FILE 
+# SIM_ARGS="-gCOEFFS_FILE=$(COEFFS_FILE)"
+# TESTCASE=arbitrary_filter_test
 
 include $(shell cocotb-config --makefiles)/Makefile.sim

@@ -42,8 +42,6 @@ async def capture_output(dut: Filter, arr: List[float]):
 # *************************************************************************** #
 #                                    Tests                                    #
 # *************************************************************************** #
-
-
 @cocotb.test()
 async def single_coef_test(dut: Filter):
     dut.clk_i.value = 0
@@ -109,10 +107,8 @@ async def arbitrary_filter_test(dut: Filter):
 
     # Assertions.
     output_ndarray = np.array(output)
-    tolerance = 0.001
+    np.save("data", output_ndarray, allow_pickle=True)
+    np.save("datac", compare, allow_pickle=True)
+    tolerance = 2**-15
     for expected, actual in zip(compare, output_ndarray):
-        # print(f"--{i}--")
-        # print(expected)
-        # print(actual)
-        # print("------")
-        assert np.abs(expected - actual) < tolerance
+        assert np.abs(expected - actual) < tolerance, f"{expected} VS {actual}"
