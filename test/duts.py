@@ -41,5 +41,9 @@ class Filter(Protocol):
         ...
 
     @property
+    def coeffs_i(self) -> NonHierarchyIndexableObject:
+        ...
+
+    @property
     def data_o(self) -> BinaryValue:
         ...

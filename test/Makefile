@@ -10,7 +10,7 @@ COEFFS_FILE=../data/voice_filter.data
 VHDL_SOURCES += $(PWD)/../hdl/fir_pkg.vhd
 VHDL_SOURCES += $(PWD)/../hdl/fir_saturator.vhd
 VHDL_SOURCES += $(PWD)/../hdl/fir_filter.vhd
-VHDL_SOURCES += $(PWD)/../hdl/fir_top.vhd
+# VHDL_SOURCES += $(PWD)/../hdl/fir_top.vhd
 
 TOPLEVEL = fir_$(FIR_TARGET)
 
