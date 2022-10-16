@@ -132,3 +132,4 @@ dmypy.json
 test/*
 !test/*.py
 !test/Makefile
+!test/lib
