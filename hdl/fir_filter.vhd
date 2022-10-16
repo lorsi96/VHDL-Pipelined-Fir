@@ -36,7 +36,7 @@ signal mreg_s : mult_registers := (others=>(others=>'0'));
 type dsp_registers is array(0 to FILTER_TAPS) of signed( (FIR_FILTER_OUT_WIDTH - 1) downto 0);
 signal preg_s : dsp_registers := (others=>(others=>'0'));
 
--- rtl --
+-- RTL --
 begin  
     data_o <= std_logic_vector(preg_s(0));         
     process(clk_i, reset_i)

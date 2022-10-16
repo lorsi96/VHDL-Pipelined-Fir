@@ -1,1 +1,7 @@
-cd test && make FIR_TARGET=$1 && make clean; cd .. 
+cd test
+for tg in "$@" 
+do 
+    make FIR_TARGET=$tg; 
+    make clean; 
+done
+cd ..
