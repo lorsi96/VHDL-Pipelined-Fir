@@ -125,6 +125,9 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
+# vscode
+.vscode
+
 # Pyre type checker
 .pyre/
 
@@ -132,3 +135,4 @@ dmypy.json
 test/*
 !test/*.py
 !test/Makefile
+!test/lib

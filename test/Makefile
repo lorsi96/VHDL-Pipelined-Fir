@@ -8,15 +8,18 @@ COEFFS_FILE=../data/voice_filter.data
 
 # Sources
 VHDL_SOURCES += $(PWD)/../hdl/fir_pkg.vhd
+VHDL_SOURCES += $(PWD)/../hdl/fir_coef_loader.vhd
 VHDL_SOURCES += $(PWD)/../hdl/fir_saturator.vhd
 VHDL_SOURCES += $(PWD)/../hdl/fir_filter.vhd
+VHDL_SOURCES += $(PWD)/../hdl/fir_saturating_filter.vhd
 VHDL_SOURCES += $(PWD)/../hdl/fir_top.vhd
 
 TOPLEVEL = fir_$(FIR_TARGET)
 
 MODULE = test_fir_$(FIR_TARGET)
 
-SIM_ARGS="-gCOEFFS_FILE=$(COEFFS_FILE)"
-TESTCASE=arbitrary_filter_test
+# ifeq $COEFFS_FILE 
+# SIM_ARGS="-gCOEFFS_FILE=$(COEFFS_FILE)"
+# TESTCASE=arbitrary_filter_test
 
 include $(shell cocotb-config --makefiles)/Makefile.sim
